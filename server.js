@@ -42,14 +42,14 @@ app.get('/todos', function(req, res) {
 // GET /todos/:id
 app.get('/todos/:id', function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
-	var matchedTodo = _.findWhere(todos, {
-		id: todoId
+	db.todo.findById(todoId).then(function (matchedTodo) {
+		if (!matchedTodo) {
+			return res.status(404).send();
+		}
+		res.json(matchedTodo.toJSON());
+	}, function (e) {
+		res.status(500).json(e);
 	});
-	if (matchedTodo) {
-		res.json(matchedTodo);
-	} else {
-		res.status(404).send();
-	}
 });
 
 // POST /todos
