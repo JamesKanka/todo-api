@@ -81,7 +81,7 @@ app.post('/todos', middleware.requireAuthentication, function(req, res) {
 // DELETE /todos/:id
 app.delete('/todos/:id', middleware.requireAuthentication, function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
-	
+
 	db.todo.findOne({
 		where: {
 			id: todoId,
@@ -163,7 +163,7 @@ app.post('/users/login', function(req, res) {
 
 
 
-db.sequelize.sync().then(function() {
+db.sequelize.sync({force:true}).then(function() {
 	app.listen(PORT, function() {
 		console.log('Express listening to port ' + PORT + '!');
 	});
